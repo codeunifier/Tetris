@@ -21,8 +21,6 @@
 ************************************************/
 void drawRect(Point topLeft, int blockSize)
 {
-	std::cout << "topLeft: " << topLeft.getX() << ", " << topLeft.getY() << std::endl;
-	std::cin.get();
 	Point tr(false /*check*/); // top right 
 	Point bl(false /*check*/); // bottom left
 	Point br(false /*check*/); // bottom right

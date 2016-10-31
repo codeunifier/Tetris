@@ -5,8 +5,8 @@
 #include "piece.h"
 #include <vector>
 
-#define BOARD_WIDTH 18
-#define BOARD_LENGTH 30
+#define BOARD_WIDTH 10
+#define BOARD_LENGTH 20
 
 class Board
 {
@@ -21,6 +21,7 @@ private:
 	Point topLeftBoard;
 	Point bottomRightBoard;
 	std::vector<Piece*> piecesOnBoard;
+	
 };
 
 #endif

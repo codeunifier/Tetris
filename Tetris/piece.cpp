@@ -242,66 +242,66 @@ int pieceInitialDisplacement[7 /*kind */][4 /* rotation */][2 /* position */] =
 {
 	/* Square */
 	{
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -3 }
+		{ -3, 3 },
+		{ -3, 3 },
+		{ -3, 3 },
+		{ -3, 3 }
 	},
 	/* I */
 	{
-		{ -2, -2 },
-		{ -2, -3 },
-		{ -2, -2 },
-		{ -2, -3 }
+		{ -3, 4 },
+		{ -3, 2 },
+		{ -3, 3 },
+		{ -2, 2 }
 	},
 	/* L */
 	{
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -2 }
+		{ -2, 3 },
+		{ -3, 3 },
+		{ -2, 2 },
+		{ -2, 3 }
 	},
 	/* L mirrored */
 	{
-		{ -2, -3 },
-		{ -2, -2 },
-		{ -2, -3 },
-		{ -2, -3 }
+		{ -2, 2 },
+		{ -2, 3 },
+		{ -2, 3 },
+		{ -3, 3 }
 	},
 	/* N */
 	{
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -2 }
+		{ -2, 3 },
+		{ -3, 3 },
+		{ -2, 2 },
+		{ -2, 1 }
 	},
 	/* N mirrored */
 	{
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -2 }
+		{ -2, 3 },
+		{ -3, 3 },
+		{ -2, 2 },
+		{ -2, 3 }
 	},
 	/* T */
 	{
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -3 },
-		{ -2, -2 }
+		{ -2, 3 },
+		{ -3, 3 },
+		{ -2, 2 },
+		{ -2, 3 }
 	},
 };
 
 /*************************
 * PIECE
-*    default constructor
+*    constructor for piece class
 **************************/
-Piece::Piece()
+Piece::Piece(int boardWidth)
 {
 	kind = random(0, 6);
 	rotation = random(0, 3);
-	position.setX(9 + getXInitialPosition()); //9 = BOARD_WIDTH / 2
+	position.setX(boardWidth / 2 + getXInitialPosition()); //9 = BOARD_WIDTH / 2
 	position.setY(getYInitialPosition());
-	//std::cerr << "Piece initialized: " << position.getX() << ", " << position.getY() << std::endl;
+	//std::cerr << "Piece created: " << position.getX() << ", " << position.getY() << std::endl;
 }
 
 /*********************************************************
@@ -332,8 +332,7 @@ int Piece::getYInitialPosition()
 }
 
 void Piece::draw(Point topLeft)
-{
-	//FIX
+{	
 	Point pixels = indexToPixel(topLeft, position);
 
 	for (int i = 0; i < 5; i++)
@@ -341,11 +340,7 @@ void Piece::draw(Point topLeft)
 		for (int j = 0; j < 5; j++)
 		{
 			if (pieceConfigList[kind][rotation][i][j] != 0)
-			{
-				//draw the rectangle
 				drawRect(Point(pixels.getX() + i * BLOCK_SIZE, pixels.getY() + j * BLOCK_SIZE), BLOCK_SIZE);
-				
-			}
 		}
 	}
 }

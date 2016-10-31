@@ -19,6 +19,7 @@ Board::Board()
 	topLeftBoard.setY(BOARD_LENGTH * (BLOCK_SIZE / 2));
 	bottomRightBoard.setX(BOARD_WIDTH * (BLOCK_SIZE / 2));
 	bottomRightBoard.setY(-(BOARD_LENGTH * (BLOCK_SIZE / 2)));
+	//std::cout<<"Board created." << std::endl;
 }
 
 /*********************************************************************
@@ -41,8 +42,7 @@ void Board::draw()
 	//draw any pieces already on the board
 	if (piecesOnBoard.size() > 0)
 	{
-		//for (int i = 0; i < piecesOnBoard.size(); i++)
-			//piecesOnBoard[i]->draw(topLeftBoard);
+		
 	}
 }
 
