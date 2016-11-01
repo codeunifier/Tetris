@@ -26,7 +26,7 @@ private:
 
 	Piece * mainPiece;
 	Board board;
-	Piece* createPiece() { return new Piece(BOARD_WIDTH); }
+	Piece* createPiece() { delete mainPiece; return new Piece(BOARD_WIDTH); }
 
 	int timer;
 	void resetTimer() { timer = 35; }

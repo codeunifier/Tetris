@@ -55,35 +55,7 @@ void drawRect(Point topLeft, int blockSize)
 * DRAW drawBoard
 *    draws the frame of the game board (optional grid)
 ********************************************************/
-void drawBoard(const Point & topLeft, const Point & bottomRight)
-{
-	//frame
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glBegin(GL_LINE_STRIP);
-	glVertex2f(topLeft.getX(), topLeft.getY());
-	glVertex2f(bottomRight.getX(), topLeft.getY());
-	glVertex2f(bottomRight.getX(), bottomRight.getY());
-	glVertex2f(topLeft.getX(), bottomRight.getY());
-	glVertex2f(topLeft.getX(), topLeft.getY());
-	glEnd();
 
-	//grid
-	glColor3f(1.0f, 0.0f, 0.0f);
-	for (int dy = topLeft.getY(); dy > bottomRight.getY(); dy -= 20)
-	{
-		glBegin(GL_LINE_STRIP);
-		glVertex2f(topLeft.getX(), dy);
-		glVertex2f(bottomRight.getX(), dy);
-		glEnd();
-	}
-	for (int dx = topLeft.getX(); dx < bottomRight.getX(); dx += 20)
-	{
-		glBegin(GL_LINE_STRIP);
-		glVertex2f(dx, topLeft.getY());
-		glVertex2f(dx, bottomRight.getY());
-		glEnd();
-	}
-}
 
 /*************************************
 * DRAW arrayToPoint

@@ -17,11 +17,13 @@ public:
 	Point getBRB() { return bottomRightBoard; }
 	void pieceToBoard(Piece * add);
 	void advance();
+	bool isFilled(int i, int j) { if (grid[i][j] == FILLED) return true; return false; }
+	void clearPossibleRow();
 private:
 	Point topLeftBoard;
 	Point bottomRightBoard;
-	std::vector<Piece*> piecesOnBoard;
-	
+	int grid[BOARD_WIDTH][BOARD_LENGTH];
+	enum { FILLED, EMPTY };
 };
 
 #endif

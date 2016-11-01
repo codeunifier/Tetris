@@ -5,7 +5,6 @@
 #include <vector>
 
 void drawRect(Point topLeft, int blockSize);
-void drawBoard(const Point & topLeft, const Point & bottomRight);
 Point indexToPixel(Point topLeftBoard, Point position);
 
 #endif

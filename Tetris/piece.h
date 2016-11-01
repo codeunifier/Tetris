@@ -20,8 +20,11 @@ public:
 	Point getPosition() { return position; }
 	void draw(Point topLeft);
 	void moveLeft() { position.addX(-1); }
+	bool canMoveLeft();
 	void moveRight() { position.addX(1); }
+	bool canMoveRight(int boardWidth);
 	void moveDown() { position.addY(1); }
+	void moveUp() { position.addY(-1); }
 	void rotate() {	rotation++;	if (rotation > 3) rotation = 0;	}
 private:
 	int kind;

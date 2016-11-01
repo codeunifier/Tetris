@@ -24,7 +24,7 @@ Game::Game(Point tl, Point br) : topLeftScreen(tl), bottomRightScreen(br)
 ****************************/
 void Game::advance()
 {
-	board.advance();
+	//board.advance(); doesn't do anything right now
 
 	if (timer <= 0)
 	{
@@ -43,10 +43,44 @@ void Game::advance()
 *****************************************************/
 void Game::handleCollisions()
 {
-	if (mainPiece->getPosition().getY() >= BOARD_LENGTH)
+	//iterate through 5x5 grid
+	for (int x = mainPiece->getPosition().getX(), i = 0; x < mainPiece->getPosition().getX() + 5; x++, i++)
 	{
-		std::cerr << "Piece has reached bottom of board\n";
+		for (int y = mainPiece->getPosition().getY(), j = 0; y > mainPiece->getPosition().getY() - 5; y--, j++)
+		{
+			//we only care about the actual piece within the 5x5
+			if (mainPiece->getBlockType(i, j) != 0)
+			{
+				//checks if piece collides with a filled space on the board
+				if (y >= 0 && board.isFilled(x, y))
+				{
+					mainPiece->moveUp();
+					board.pieceToBoard(mainPiece);
+					mainPiece = createPiece();
+					break;
+				}
+				//checks if the piece is at the bottom of the board
+				if (y == BOARD_LENGTH - 1)
+				{
+					//piece has reached the bottom of the board
+					board.pieceToBoard(mainPiece);
+					mainPiece = createPiece();
+					break;
+				}
+			}			
+		}
 	}
+
+	//checks if any piece in the top row in filled
+	for (int x = 0; x < BOARD_WIDTH; x++)
+	{
+		if (board.isFilled(x, 0))
+		{
+			//game over
+		}
+	}
+
+	board.clearPossibleRow();
 }
 
 /*********************************************************************
@@ -55,7 +89,9 @@ void Game::handleCollisions()
 **********************************************************************/
 void Game::draw(const Interface & ui)
 {
-	mainPiece->draw(board.getTLB());
+	//drawRect(indexToPixel(board.getTLB(), Point(2, 19)), BLOCK_SIZE);
+	//std::cout << "main piece position for drawing: " << mainPiece->getPosition().getX() << ", " << mainPiece->getPosition().getY() << std::endl;
+	mainPiece->draw(indexToPixel(board.getTLB(), mainPiece->getPosition()));
 	board.draw();
 }
 
@@ -67,13 +103,13 @@ void Game::handleInput(const Interface & ui)
 {
 	if (ui.isLeft())
 	{
-		//if (!mainPiece->canMoveLeft())
+		if(mainPiece->canMoveLeft())
 			mainPiece->moveLeft();
 	}
 
 	if (ui.isRight())
 	{
-		//if (!mainPiece->canMoveRight())
+		if (mainPiece->canMoveRight(BOARD_WIDTH))
 			mainPiece->moveRight();
 	}
 

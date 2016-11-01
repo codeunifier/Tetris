@@ -299,7 +299,7 @@ Piece::Piece(int boardWidth)
 {
 	kind = random(0, 6);
 	rotation = random(0, 3);
-	position.setX(boardWidth / 2 + getXInitialPosition()); //9 = BOARD_WIDTH / 2
+	position.setX(boardWidth / 2 + getXInitialPosition());
 	position.setY(getYInitialPosition());
 	//std::cerr << "Piece created: " << position.getX() << ", " << position.getY() << std::endl;
 }
@@ -331,16 +331,49 @@ int Piece::getYInitialPosition()
 	return pieceInitialDisplacement[kind][rotation][1];
 }
 
-void Piece::draw(Point topLeft)
+/*******************************************************************
+* PIECE draw
+*    draw the piece
+*    topLeftPiecePixels - top left position of the piece in pixels
+********************************************************************/
+void Piece::draw(Point topLeftPiecePixels)
 {	
-	Point pixels = indexToPixel(topLeft, position);
-
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
 			if (pieceConfigList[kind][rotation][i][j] != 0)
-				drawRect(Point(pixels.getX() + i * BLOCK_SIZE, pixels.getY() + j * BLOCK_SIZE), BLOCK_SIZE);
+				drawRect(Point(topLeftPiecePixels.getX() + i * BLOCK_SIZE, topLeftPiecePixels.getY() + j * BLOCK_SIZE), BLOCK_SIZE);
 		}
 	}
+}
+
+bool Piece::canMoveLeft()
+{
+	int left = 100; //randomly large number
+	for (int i = 0, x = position.getX(); i < 5; i++, x++)
+		for (int j = 0; j < 5; j++)
+			if (pieceConfigList[kind][rotation][i][j] != 0)
+				if (x < left)
+					left = x;	//find the x coordinate of the left-most block in the piece
+	
+	if (left > 0)
+		return true;
+	else
+		return false;
+}
+
+bool Piece::canMoveRight(int boardWidth)
+{
+	int right = -1; //less than 0
+	for (int i = 0, x = position.getX(); i < 5; i++, x++)
+		for (int j = 0; j < 5; j++)
+			if (pieceConfigList[kind][rotation][i][j] != 0)
+				if (right < x)
+					right = x;
+	
+	if (right < boardWidth - 1)
+		return true;
+	else
+		return false;
 }
